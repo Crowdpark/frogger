@@ -7,7 +7,7 @@ package net.antonstepanov.frogger.events {
 	public class FroggerEvent extends Event {
 		
 		
-		public static var POSSITION_CHANGE:String="frog_position_change";
+		public static var POSSITION_CHANGE:String="frog_position_change_x";
 		
 		public function FroggerEvent(type : String) {
 			

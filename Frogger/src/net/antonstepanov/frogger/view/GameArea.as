@@ -29,12 +29,19 @@ package net.antonstepanov.frogger.view {
 			model.addEventListener(FroggerEvent.POSSITION_CHANGE, positionChangeHandler);
 		}
 		
+		
+		private function updateFrogPosition():void {
+			//frog.x=model.posX;
+			//frog.y=model.posY;
+			frog.setPosition(model.posX, model.posY);
+		}
+		
 		//
 		//EVENT HANDLERS
 		//
 		
 		private function positionChangeHandler(event : FroggerEvent) : void {
-			
+			updateFrogPosition();
 		}
 		
 	}

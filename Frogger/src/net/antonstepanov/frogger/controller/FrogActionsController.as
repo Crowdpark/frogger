@@ -7,10 +7,23 @@ package net.antonstepanov.frogger.controller {
 		
 		private var model:ModelLocator=ModelLocator.getInstance();
 		
+		private var step:int=50;
+		
 		
 		public function moveUp():void {
-			trace("up");
-			
+			model.posY=model.posY-step;
+		}
+		
+		public function moveDown():void {
+			model.posY=model.posY+step;
+		}
+		
+		public function moveLeft():void {
+			model.posX=model.posX-step;
+		}
+		
+		public function moveRight():void {
+			model.posX=model.posX+step;
 		}
 		
 	}

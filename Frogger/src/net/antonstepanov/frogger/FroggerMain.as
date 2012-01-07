@@ -1,4 +1,5 @@
 package net.antonstepanov.frogger {
+	import net.antonstepanov.frogger.view.GameArea;
 	import net.antonstepanov.frogger.nonvisual.KeyboardManager;
 	import flash.display.Sprite;
 
@@ -7,7 +8,8 @@ package net.antonstepanov.frogger {
 	 */
 	public class FroggerMain extends Sprite {
 		
-		var keyManager:KeyboardManager;
+		private var keyManager:KeyboardManager;
+		private var game:GameArea;
 		
 		public function FroggerMain() {
 			init();	
@@ -16,8 +18,15 @@ package net.antonstepanov.frogger {
 
 		private function init() : void {
 			
+			//non visual
 			keyManager=new KeyboardManager();
 			addChild(keyManager);
+			
+			//game visual
+			game=new GameArea();
+			addChild(game);
+			
+			
 		}
 	}
 }

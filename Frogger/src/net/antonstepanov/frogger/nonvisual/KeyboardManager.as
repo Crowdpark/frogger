@@ -41,6 +41,7 @@ package net.antonstepanov.frogger.nonvisual {
 					break;
 				
 				case 37://left arrow
+					model.frogAction.moveLeft();
 					break;
 				
 				case 38://up arrow
@@ -48,9 +49,11 @@ package net.antonstepanov.frogger.nonvisual {
 					break;
 				
 				case 39://right arrow
+					model.frogAction.moveRight();
 					break;
 				
 				case 40://down arrow
+					model.frogAction.moveDown();
 					break;
 				
 				default:
