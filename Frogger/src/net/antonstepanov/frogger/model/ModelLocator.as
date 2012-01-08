@@ -1,6 +1,8 @@
 package net.antonstepanov.frogger.model {
-	import net.antonstepanov.frogger.events.FroggerEvent;
 	import net.antonstepanov.frogger.controller.FrogActionsController;
+	import net.antonstepanov.frogger.events.FroggerEvent;
+	import net.antonstepanov.frogger.view.Frog;
+
 	import flash.events.EventDispatcher;
 
 	/**
@@ -34,6 +36,8 @@ package net.antonstepanov.frogger.model {
 		//
 		private var _frogAction : FrogActionsController;
 		
+		
+		
 		private var _posX:int;
 		private var _posY:int;
 		
@@ -41,7 +45,7 @@ package net.antonstepanov.frogger.model {
 		//
 		//PUBLIC VARIABLES
 		//
-		
+		public var frog:Frog;//frog reference
 		
 		
 		

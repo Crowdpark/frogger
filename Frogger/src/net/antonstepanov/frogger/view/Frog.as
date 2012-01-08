@@ -17,6 +17,8 @@ package net.antonstepanov.frogger.view {
 		private var _state:String="idle";
 		private var _direction:String;
 		
+		public var isMoving:Boolean=false;
+		
 		public function Frog() {
 		
 			mcFrog=new Assets.game_frog_mc();
@@ -59,6 +61,7 @@ package net.antonstepanov.frogger.view {
 		}
 		private function changeDirection() : void {
 			switch (direction) {
+				
 				case "left":
 					container.rotation=-90;	
 					break;
@@ -81,22 +84,20 @@ package net.antonstepanov.frogger.view {
 		public function setPosition(_x:int,_y:int):void {
 			TweenMax.killTweensOf(this);
 			if (this.x>_x) {
-				jumpAnimation("left");
+				direction="left";
 			}else if (this.x<_x) {
-				jumpAnimation("right");
-			} else {
-				//return;
-			}
-			
-			
-			if (this.y>_y) {
-				jumpAnimation("up");
+				direction="right";
+			} else if (this.y>_y) {
+				direction="up";
 			}else if (this.y<_y) {
-				jumpAnimation("down");
+				direction="down";
 			}else {
 				//return;
 			}
-			TweenMax.to(this, 0.2, {x:_x,y:_y});
+			
+			isMoving=true;
+			playLabel("jump");
+			TweenMax.to(this, 0.2, {x:_x,y:_y,onComplete:function():void {isMoving=false;}});
 		}
 		
 		//
@@ -120,12 +121,6 @@ package net.antonstepanov.frogger.view {
 			//mcFrog.addEventListener(Event.ENTER_FRAME, enterFrameHandler);
 		}
 		
-		private function jumpAnimation(_direction:String):void {
-			direction=_direction;
-			playLabel("jump");
-			
-			
-		}
 		
 		
 		private function playLabel(label:String):void {

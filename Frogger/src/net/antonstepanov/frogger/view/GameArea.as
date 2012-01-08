@@ -9,16 +9,50 @@ package net.antonstepanov.frogger.view {
 	 */
 	public class GameArea extends Sprite {
 		
-		private var frog:Frog;
+//		private var frog:Frog;
 		private var model:ModelLocator=ModelLocator.getInstance();
 		
+		private var linesContainer:Sprite;
 		
 		public function GameArea() {
 			
-			frog=new Frog();
-			addChild(frog);
 			
+			model.frog=new Frog();
+			initLines();
+			
+			addChild(model.frog);
 			addListeners();
+		}
+
+		private function initLines() : void {
+			linesContainer=new Sprite();
+			addChild(linesContainer)	;
+			
+			addLine(HLine.GRASS);
+			addLine(HLine.WATER);
+			addLine(HLine.WATER);
+			addLine(HLine.WATER);
+			addLine(HLine.WATER);
+			addLine(HLine.GRASS);
+			addLine(HLine.GRASS);
+			addLine(HLine.ROAD);
+			addLine(HLine.ROAD);
+			addLine(HLine.ROAD);
+			addLine(HLine.ROAD);
+			addLine(HLine.GRASS);
+			//addLine(HLine.GRASS);
+			
+			
+			//init frog position and direction
+			model.posX=model.frog.x=linesContainer.width/2;
+			model.posY=model.frog.y=linesContainer.height-32;
+			model.frog.direction="up";
+		}
+		
+		private function addLine(lineType:String):void {
+			var line:HLine=new HLine(lineType);
+			line.y=linesContainer.height;
+			linesContainer.addChild(line);
 		}
 		
 		//
@@ -33,7 +67,7 @@ package net.antonstepanov.frogger.view {
 		private function updateFrogPosition():void {
 			//frog.x=model.posX;
 			//frog.y=model.posY;
-			frog.setPosition(model.posX, model.posY);
+			model.frog.setPosition(model.posX, model.posY);
 		}
 		
 		//

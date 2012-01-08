@@ -35,6 +35,7 @@ package net.antonstepanov.frogger.nonvisual {
 		
 		
 		private function keyAction(keyPressed:uint):void {
+			if (model.frog.isMoving) return;
 			switch (keyPressed) {
 				
 				case 13:
