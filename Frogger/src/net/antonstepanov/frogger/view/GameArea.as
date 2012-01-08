@@ -28,6 +28,7 @@ package net.antonstepanov.frogger.view {
 			linesContainer=new Sprite();
 			addChild(linesContainer)	;
 			
+			
 			addLine(HLine.GRASS);
 			addLine(HLine.WATER);
 			addLine(HLine.WATER);
@@ -35,10 +36,14 @@ package net.antonstepanov.frogger.view {
 			addLine(HLine.WATER);
 			addLine(HLine.GRASS);
 			addLine(HLine.GRASS);
+			//addLine(HLine.ROAD,new TrafficLine(-5));
+			//addLine(HLine.ROAD,new TrafficLine(-7));
+		//	addLine(HLine.ROAD,new TrafficLine(5));
 			addLine(HLine.ROAD);
 			addLine(HLine.ROAD);
-			addLine(HLine.ROAD);
-			addLine(HLine.ROAD);
+			//addLine(HLine.ROAD,new TrafficLine(-4));
+			addLine(HLine.ROAD,new TrafficLine(-6));
+			
 			addLine(HLine.GRASS);
 			//addLine(HLine.GRASS);
 			
@@ -49,9 +54,10 @@ package net.antonstepanov.frogger.view {
 			model.frog.direction="up";
 		}
 		
-		private function addLine(lineType:String):void {
+		private function addLine(lineType:String,_trafficLine:TrafficLine=null):void {
 			var line:HLine=new HLine(lineType);
 			line.y=linesContainer.height;
+			if (_trafficLine) line.trafficLine=_trafficLine;
 			linesContainer.addChild(line);
 		}
 		

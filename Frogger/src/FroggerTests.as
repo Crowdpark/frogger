@@ -1,5 +1,6 @@
 package {
 	import net.antonstepanov.frogger.FroggerMain;
+	import net.antonstepanov.utils.FPSCounter;
 
 	import flash.display.Sprite;
 		
@@ -17,6 +18,7 @@ package {
 			
 			mainApp=new FroggerMain();
 			addChild(mainApp);
+			addChild(new FPSCounter());
 		}
 	}
 }
