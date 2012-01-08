@@ -16,6 +16,12 @@ package net.antonstepanov.frogger.view {
 		public static var CAR_MEDIUM:String="game_carMedium";
 		public static var CAR_LONG:String="game_carLong";
 		
+		public static var WATER_TURTLE:String="game_turtle";
+		public static var WATER_CROC:String="game_croc";
+		
+		public static var TREE_SMALL:String="game_treeSmall";
+		public static var TREE_MEDIUM:String="game_treeMedium";
+		public static var TREE_LONG:String="game_treeLong";
 		
 		private var graphicContainer:Sprite;
 		private var type:String;
@@ -30,7 +36,7 @@ package net.antonstepanov.frogger.view {
 			type=_type;
 			direction=_direction;
 			init();
-			drawBG();
+			//drawBG();
 		}
 
 		private function drawBG() : void {
@@ -84,14 +90,32 @@ package net.antonstepanov.frogger.view {
 				case CAR_LONG:
 					unit = new Assets.game_carLong_mc();
 					break;
-					
+				
+				case TREE_LONG:
+					unit = new Assets.game_treeLong_mc();
+					break;
+				case TREE_MEDIUM:
+					unit = new Assets.game_treeMedium_mc();
+					break;
+				case TREE_SMALL:
+					unit = new Assets.game_treeSmall_mc();
+					break;
+				
+				case WATER_CROC:
+					unit = new Assets.game_turtle_mc();
+					break;
+				
+				case WATER_TURTLE:
+					unit = new Assets.game_croc_mc();
+					break;
+				
 				default:
 					break;
 			}
 			
 			if (direction>0) {
 				unit.scaleX=-1;
-				unit.x=unit.width
+				unit.x=unit.width;
 			}
 			return unit;
 		}

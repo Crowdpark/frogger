@@ -12,6 +12,9 @@ package net.antonstepanov.frogger.view {
 //		private var frog:Frog;
 		private var model:ModelLocator=ModelLocator.getInstance();
 		
+		
+		private var bgLines:Array=[];
+		private var linesHeight:int=64;
 		private var linesContainer:Sprite;
 		
 		public function GameArea() {
@@ -28,21 +31,25 @@ package net.antonstepanov.frogger.view {
 			linesContainer=new Sprite();
 			addChild(linesContainer)	;
 			
-			
+			var waterTraffic:Array= [TrafficUnit.TREE_LONG,TrafficUnit.TREE_MEDIUM,TrafficUnit.TREE_SMALL,TrafficUnit.WATER_CROC,TrafficUnit.WATER_TURTLE];
 			addLine(HLine.GRASS);
-			addLine(HLine.WATER);
-			addLine(HLine.WATER);
-			addLine(HLine.WATER);
-			addLine(HLine.WATER);
+			
+			addLine(HLine.WATER,new TrafficLine(-2,waterTraffic));
+			addLine(HLine.WATER,new TrafficLine(2,waterTraffic));
+			addLine(HLine.WATER,new TrafficLine(-3,waterTraffic));
+			addLine(HLine.WATER,new TrafficLine(1,waterTraffic));
+			
 			addLine(HLine.GRASS);
 			addLine(HLine.GRASS);
 			//addLine(HLine.ROAD,new TrafficLine(-5));
 			//addLine(HLine.ROAD,new TrafficLine(-7));
 		//	addLine(HLine.ROAD,new TrafficLine(5));
-			addLine(HLine.ROAD);
-			addLine(HLine.ROAD);
-			//addLine(HLine.ROAD,new TrafficLine(-4));
-			addLine(HLine.ROAD,new TrafficLine(-6));
+		
+			var roadTrafic:Array= [TrafficUnit.CAR_LONG,TrafficUnit.CAR_MEDIUM,TrafficUnit.CAR_SMALL_BLUE,TrafficUnit.CAR_SMALL_YELLOW];
+			addLine(HLine.ROAD,new TrafficLine(-2,roadTrafic));
+			addLine(HLine.ROAD,new TrafficLine(-3,roadTrafic));
+			addLine(HLine.ROAD,new TrafficLine(3,roadTrafic));
+			addLine(HLine.ROAD,new TrafficLine(2,roadTrafic));
 			
 			addLine(HLine.GRASS);
 			//addLine(HLine.GRASS);
@@ -55,10 +62,14 @@ package net.antonstepanov.frogger.view {
 		}
 		
 		private function addLine(lineType:String,_trafficLine:TrafficLine=null):void {
+			
 			var line:HLine=new HLine(lineType);
-			line.y=linesContainer.height;
+			line.y=linesHeight *bgLines.length;
 			if (_trafficLine) line.trafficLine=_trafficLine;
 			linesContainer.addChild(line);
+			
+			bgLines.push(line);
+			
 		}
 		
 		//

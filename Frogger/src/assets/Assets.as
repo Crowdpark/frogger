@@ -7,8 +7,7 @@ package assets {
 		[Embed(source="frogger.swf", symbol="game_frog")]
 		public static var game_frog_mc:Class;
 		
-		[Embed(source="frogger.swf", symbol="game_turtle")]
-		public static var game_turtle_mc:Class;
+	
 		
 		
 		//bg
@@ -35,6 +34,24 @@ package assets {
 		
 		[Embed(source="frogger.swf", symbol="game_carLong")]
 		public static var game_carLong_mc:Class;
+		
+		
+		
+		[Embed(source="frogger.swf", symbol="game_treeLong")]
+		public static var game_treeLong_mc:Class;
+		
+		[Embed(source="frogger.swf", symbol="game_treeMedium")]
+		public static var game_treeMedium_mc:Class;
+		
+		[Embed(source="frogger.swf", symbol="game_treeSmall")]
+		public static var game_treeSmall_mc:Class;
+		
+		
+		[Embed(source="frogger.swf", symbol="game_turtle")]
+		public static var game_turtle_mc:Class;
+		
+		[Embed(source="frogger.swf", symbol="game_croc")]
+		public static var game_croc_mc:Class;
 		
 	}
 }

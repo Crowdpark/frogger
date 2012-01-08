@@ -12,7 +12,7 @@ package {
 	 */
 	public class FroggerTests extends Sprite {
 		
-		var mainApp:FroggerMain;
+		private var mainApp:FroggerMain;
 		
 		public function FroggerTests() {
 			

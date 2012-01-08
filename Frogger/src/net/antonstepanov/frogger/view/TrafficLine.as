@@ -1,6 +1,5 @@
 package net.antonstepanov.frogger.view {
 	import net.antonstepanov.utils.MathUtils;
-	import assets.Assets;
 
 	import flash.display.DisplayObject;
 	import flash.display.Sprite;
@@ -15,10 +14,10 @@ package net.antonstepanov.frogger.view {
 		private var speed:Number;
 		private var lineLength:int=768;
 		private var minDistance:uint=100;
-		private var maxDistance:uint=150;
+		private var maxDistance:uint=300;
 		private var unitQty:uint=4;
 		
-		private var unitTypes:Array;
+		private var unitTypes:Array=[TrafficUnit.CAR_LONG,TrafficUnit.CAR_MEDIUM,TrafficUnit.CAR_SMALL_BLUE,TrafficUnit.CAR_SMALL_YELLOW];
 		
 		private var nextUnitDistance:uint;
 		
@@ -27,10 +26,10 @@ package net.antonstepanov.frogger.view {
 		
 		private var trafficArr:Array=[];
 		
-		public function TrafficLine(_speed:Number,unitTypes:Array=null) {
+		public function TrafficLine(_speed:Number,_unitTypes:Array=null) {
 			
 			speed=_speed;
-			
+			if (_unitTypes) unitTypes=_unitTypes;
 			trafficContainer = new Sprite();
 			addChild(trafficContainer);
 			
@@ -46,7 +45,7 @@ package net.antonstepanov.frogger.view {
 			
 			for (var i:int=0;i<unitQty;i++) {
 				//trafficUnit= new Assets.game_carMedium_mc();
-				trafficUnit= new TrafficUnit(TrafficUnit.CAR_LONG,speed);
+				trafficUnit= getUnit();
 				trafficContainer.addChild(trafficUnit);
 				
 				
@@ -54,7 +53,7 @@ package net.antonstepanov.frogger.view {
 				nextPos=trafficUnit.x+trafficUnit.width+MathUtils.randomIntegerRange(minDistance, maxDistance);
 				trafficArr.push(trafficUnit);
 			}
-			
+			nextUnitDistance=MathUtils.randomIntegerRange(minDistance, maxDistance)+trafficUnit.width;
 		}
 		
 		
@@ -73,11 +72,14 @@ package net.antonstepanov.frogger.view {
 		}
 
 		private function addUnit() : void {
-			var trafficUnit:DisplayObject= new TrafficUnit(TrafficUnit.CAR_LONG,speed);
+			var trafficUnit:DisplayObject= getUnit();
 			trafficContainer.addChild(trafficUnit);
 			
-			//trafficUnit.x=-trafficUnit.width;
-			trafficUnit.x=lineLength;
+			if (speed>0){
+				trafficUnit.x=-trafficUnit.width;
+			}else {
+				trafficUnit.x=lineLength;
+			}
 			
 			trafficArr.push(trafficUnit);
 			
@@ -85,6 +87,11 @@ package net.antonstepanov.frogger.view {
 			//nextUnitDistance=trafficUnit.x;
 		}
 
+		
+		private function getUnit():DisplayObject {
+			var index:int=MathUtils.randomIntegerRange(0, unitTypes.length);
+			return new TrafficUnit(unitTypes[index],speed);;
+		}
 		
 		
 		private function configListeners() : void {
@@ -111,7 +118,7 @@ package net.antonstepanov.frogger.view {
 				}
 				checkTraffic(trafficUnit,i);
 			}
-			trace('noTraffic: ' + (noTraffic),nextUnitDistance);
+			//trace('noTraffic: ' + (noTraffic),nextUnitDistance);
 			if (nextUnitDistance<noTraffic) {
 				addUnit();	
 			}

@@ -36,6 +36,10 @@ package net.antonstepanov.frogger.view {
 			addChild(_trafficLine);
 		}
 		
+		override public function get height():Number {
+			return bg.height;
+		}
+		
 		//
 		//PRIVATE FUNCTIONS
 		//
