@@ -7,7 +7,10 @@ package assets {
 		[Embed(source="frogger.swf", symbol="game_frog")]
 		public static var game_frog_mc:Class;
 		
-	
+		//Interface
+		[Embed(source="frogger.swf", symbol="game_hud")]
+		public static var game_hud_mc:Class;
+		
 		
 		
 		//bg
@@ -52,6 +55,14 @@ package assets {
 		
 		[Embed(source="frogger.swf", symbol="game_croc")]
 		public static var game_croc_mc:Class;
+		
+		
+		//TERRAIN
+		[Embed(source="frogger.swf", symbol="game_flower")]
+		public static var game_flower_mc:Class;
+		
+		[Embed(source="frogger.swf", symbol="game_bush")]
+		public static var game_bush_mc:Class;
 		
 	}
 }

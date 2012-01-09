@@ -83,15 +83,15 @@ package net.antonstepanov.frogger.view {
 		
 		public function setPosition(_x:int,_y:int):void {
 			TweenMax.killTweensOf(this);
-			if (this.x>_x) {
-				direction="left";
-			}else if (this.x<_x) {
-				direction="right";
-			} else if (this.y>_y) {
+			if (this.y>_y) {
 				direction="up";
 			}else if (this.y<_y) {
 				direction="down";
-			}else {
+			}else if (this.x>_x) {
+				direction="left";
+			}else if (this.x<_x) {
+				direction="right";
+			} else{
 				//return;
 			}
 			
@@ -100,10 +100,17 @@ package net.antonstepanov.frogger.view {
 			TweenMax.to(this, 0.2, {x:_x,y:_y,onComplete:function():void {isMoving=false;}});
 		}
 		
+		public function runOver():void {
+			playLabel("dead");
+		}
+		
+		
+		
 		//
 		//PRIVATE FUNCTIONS
 		//
 		private function startIdleLoop() : void {
+			
 			mcFrog.gotoAndPlay("idle");
 			mcFrog.addEventListener(Event.ENTER_FRAME, idleLoopHandler);
 		}
@@ -113,26 +120,26 @@ package net.antonstepanov.frogger.view {
 		}
 
 		
-		
-		
-		
-		
 		private function addListeners():void {
 			//mcFrog.addEventListener(Event.ENTER_FRAME, enterFrameHandler);
 		}
 		
 		
 		
+		
 		private function playLabel(label:String):void {
+			if (state==label) return;
 			state=label;
 			mcFrog.gotoAndPlay(label);
-			addEventListener(Event.ENTER_FRAME, function(e : Event) : void {
-						if (mcFrog.currentLabel != label) {
-							mcFrog.stop();
-							state="idle";
-							removeEventListener(Event.ENTER_FRAME, arguments.callee);
-						}
-			});
+			addEventListener(Event.ENTER_FRAME,playLabelHandler);
+		}
+
+		private function playLabelHandler(event : Event) : void {
+			if (mcFrog.currentLabel != state) {
+				mcFrog.stop();
+				state = "idle";
+				removeEventListener(Event.ENTER_FRAME, playLabelHandler);
+			}
 		}
 		
 		

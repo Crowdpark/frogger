@@ -37,8 +37,24 @@ package net.antonstepanov.frogger.view {
 			
 			configListeners() ;
 		}
+		//
+		//PUBLIC FUNCTIONS
+		//
+		public function hitTestTraffic(target : DisplayObject) : Boolean {
+			var trafficUnit : DisplayObject;
+			
+			for (var i : int = 0;i < trafficArr.length;i++) {
+				trafficUnit = trafficArr[i];
+				if (trafficUnit.hitTestObject(target)) {
+					return true;
+				}
+			}
+			return false;
+		}
 		
-		
+		//
+		//PRIVATE FUNCTIONS
+		//
 		private function init():void {
 			var trafficUnit:DisplayObject;
 			var nextPos:int=0;

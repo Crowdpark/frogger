@@ -36,7 +36,7 @@ package net.antonstepanov.frogger.view {
 			type=_type;
 			direction=_direction;
 			init();
-			//drawBG();
+			drawBG();
 		}
 
 		private function drawBG() : void {

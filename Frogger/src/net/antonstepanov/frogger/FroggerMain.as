@@ -1,6 +1,8 @@
 package net.antonstepanov.frogger {
-	import net.antonstepanov.frogger.view.GameArea;
+	import net.antonstepanov.frogger.nonvisual.DeathValidator;
 	import net.antonstepanov.frogger.nonvisual.KeyboardManager;
+	import net.antonstepanov.frogger.view.GameArea;
+
 	import flash.display.Sprite;
 
 	/**
@@ -9,6 +11,7 @@ package net.antonstepanov.frogger {
 	public class FroggerMain extends Sprite {
 		
 		private var keyManager:KeyboardManager;
+		private var deathValidator:DeathValidator;
 		private var game:GameArea;
 		
 		public function FroggerMain() {
@@ -21,6 +24,9 @@ package net.antonstepanov.frogger {
 			//non visual
 			keyManager=new KeyboardManager();
 			addChild(keyManager);
+			
+			deathValidator=new DeathValidator();
+			addChild(deathValidator);
 			
 			//game visual
 			game=new GameArea();
