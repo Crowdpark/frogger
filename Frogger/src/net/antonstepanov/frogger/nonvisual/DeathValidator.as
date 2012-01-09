@@ -30,6 +30,10 @@ package net.antonstepanov.frogger.nonvisual {
 		//EVENT HANDLERS
 		//
 		
+		/**
+		 * when screen mode changes map/unmap frog events 
+		 * 
+		 */
 		private function screenChangeHandler(event : FroggerEvent) : void {
 			if (model.currentScreen==GameStateList.GAME) {
 				model.addEventListener(FroggerEvent.LINE_CHANGE, lineChangeHandler);
@@ -41,7 +45,11 @@ package net.antonstepanov.frogger.nonvisual {
 				this.removeEventListener(Event.ENTER_FRAME, enterFrameHandler);
 			}
 		}
-
+		
+		/**
+		 *
+		 * 
+		 */
 		private function enterFrameHandler(event : Event) : void {
 			
 			if (model.isDead) return;
@@ -72,10 +80,6 @@ package net.antonstepanov.frogger.nonvisual {
 			
 			var lineData: TrafficLineVO = model.getCurrentLineVO();
 			
-//			if (checkBoundaries()) {
-//				setDead();
-//				return;
-//			}
 			switch( lineData.bgType) {
 				
 				case TrafficLineVO.ROAD:
@@ -83,7 +87,6 @@ package net.antonstepanov.frogger.nonvisual {
 					break;
 					
 				case TrafficLineVO.WATER:
-					//checkRoadTraffic();
 					//checkBoundaries();
 					checkDrowning();
 					break;
