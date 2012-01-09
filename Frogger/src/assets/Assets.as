@@ -11,7 +11,20 @@ package assets {
 		[Embed(source="frogger.swf", symbol="game_hud")]
 		public static var game_hud_mc:Class;
 		
+		[Embed(source="frogger.swf", symbol="title_bg")]
+		public static var title_bg_mc:Class;
 		
+		[Embed(source="frogger.swf", symbol="title_logo")]
+		public static var title_logo_mc:Class;
+		
+		[Embed(source="frogger.swf", symbol="main_bg")]
+		public static var main_bg_mc:Class;
+		
+		[Embed(source="frogger.swf", symbol="button_start")]
+		public static var button_start_mc:Class;
+		
+		[Embed(source="frogger.swf", symbol="button_scores")]
+		public static var button_scores_mc:Class;
 		
 		//bg
 		[Embed(source="frogger.swf", symbol="game_road")]

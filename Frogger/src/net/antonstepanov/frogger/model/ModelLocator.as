@@ -1,12 +1,15 @@
 package net.antonstepanov.frogger.model {
-	import flash.geom.Point;
+	import net.antonstepanov.frogger.vo.GameSettingsVO;
+	import net.antonstepanov.frogger.view.screens.ScreenManager;
 	import net.antonstepanov.frogger.controller.FrogActionsController;
 	import net.antonstepanov.frogger.controller.FrogDeathController;
+	import net.antonstepanov.frogger.controller.ScoreController;
 	import net.antonstepanov.frogger.events.FroggerEvent;
 	import net.antonstepanov.frogger.view.Frog;
 	import net.antonstepanov.frogger.vo.TrafficLineVO;
 
 	import flash.events.EventDispatcher;
+	import flash.geom.Point;
 
 	/**
 	 * @author 'Anton Stepanov'
@@ -39,6 +42,8 @@ package net.antonstepanov.frogger.model {
 		//
 		private var _frogAction : FrogActionsController;
 		private var _frogDeath : FrogDeathController;
+		private var _scoreController : ScoreController;
+		
 		
 		private var _currentLineIndex:int;
 		
@@ -53,15 +58,18 @@ package net.antonstepanov.frogger.model {
 		private var _lives:int=3;
 		private var _level:int=1;
 		
+		
 		//
 		//PUBLIC VARIABLES
 		//
 		public var frog:Frog;//frog reference
 		
 		public var lineDataArray:Array=[];
+		public var lineHeight:int=64;
 		
+		public var screenManager:ScreenManager;
 		
-		
+		public var settings:GameSettingsVO;
 		//
 		//SETTERS AND GETTERS
 		//
@@ -80,6 +88,13 @@ package net.antonstepanov.frogger.model {
 			return _frogDeath;
 		}	
 		
+		public function get scoreController() : ScoreController {
+			if (!_scoreController) _scoreController=new ScoreController();
+			return _scoreController;
+		}
+		
+		
+		
 	//GAME SETTINGS	
 		public function get gameSize() : Point {
 			return _gameSize;
@@ -87,6 +102,10 @@ package net.antonstepanov.frogger.model {
 
 		public function set gameSize(value : Point) : void {
 			_gameSize = value;
+		}
+	
+		public function get currentScreen():String {
+			 return screenManager.screen;
 		}
 	
 		
@@ -128,10 +147,8 @@ package net.antonstepanov.frogger.model {
 		}
 
 		public function set isDead(value : Boolean) : void {
-			if (_isDead && _isDead!=value) lives--;
 			_isDead = value;
 			if (_isDead) dispatchEvent(new FroggerEvent(FroggerEvent.DEATH));
-			
 		}
 		
 		//GAME STATE
@@ -166,6 +183,15 @@ package net.antonstepanov.frogger.model {
 		//PUBLIC FUNCTIONS
 		//
 		
+		public function setDead():void {
+			isDead=true;
+			lives--;
+			if (lives<0) {
+				dispatchEvent(new FroggerEvent(FroggerEvent.GAME_OVER));
+				return;
+			}
+		}
+		
 		public function moveHor(newX:int):void {
 			posX=newX;
 			dispatchEvent(new FroggerEvent(FroggerEvent.POSSITION_CHANGE));
@@ -175,9 +201,19 @@ package net.antonstepanov.frogger.model {
 			return lineDataArray[currentLineIndex] as TrafficLineVO;
 		}
 
-	
+		public function resetFrog():void {
+			
+			
+			_currentLineIndex=totalLines-1;
+			frog.x=_posX=gameSize.x*.5;
+			frog.y=_posY=gameSize.y-lineHeight*.5;
+			frog.direction="up";
+			frog.reset();
+			trace('frog.y: ' + (frog.y));
+			//dispatchEvent(new FroggerEvent(FroggerEvent.POSSITION_CHANGE));
+		}
 
-
+		
 	
 
 	

@@ -1,4 +1,5 @@
 package net.antonstepanov.frogger.nonvisual {
+	import net.antonstepanov.frogger.view.screens.GameStateList;
 	import net.antonstepanov.frogger.model.ModelLocator;
 	import flash.events.KeyboardEvent;
 	import flash.events.Event;
@@ -27,7 +28,8 @@ package net.antonstepanov.frogger.nonvisual {
 		}
 		
 		private function removeListeners():void {
-			
+			stage.removeEventListener(KeyboardEvent.KEY_DOWN, keyDownHandler);
+			this.removeEventListener(Event.REMOVED_FROM_STAGE, removedHandler);
 		}
 		
 		
@@ -35,7 +37,9 @@ package net.antonstepanov.frogger.nonvisual {
 		
 		
 		private function keyAction(keyPressed:uint):void {
-			if (model.frog.isMoving) return;
+			//trace('keyPressed: ' + (keyPressed));
+			
+			if (model.screenManager.screen!= GameStateList.GAME || model.frog.isMoving || model.isDead) return;
 			switch (keyPressed) {
 				
 				case 13:

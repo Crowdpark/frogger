@@ -1,4 +1,5 @@
 package net.antonstepanov.frogger.view {
+	import net.antonstepanov.frogger.vo.TrafficLineVO;
 	import net.antonstepanov.utils.MathUtils;
 
 	import flash.display.DisplayObject;
@@ -8,39 +9,45 @@ package net.antonstepanov.frogger.view {
 	/**
 	 * @author 'Anton Stepanov'
 	 */
-	public class TrafficLine extends Sprite {
-		
-		//settings
-		private var speed:Number;
-		private var lineLength:int=768;
-		private var minDistance:uint=100;
-		private var maxDistance:uint=300;
-		private var unitQty:uint=4;
-		
-		private var unitTypes:Array=[TrafficUnit.CAR_LONG,TrafficUnit.CAR_MEDIUM,TrafficUnit.CAR_SMALL_BLUE,TrafficUnit.CAR_SMALL_YELLOW];
-		
-		private var nextUnitDistance:uint;
+	public class TrafficLine extends Sprite implements IFroggerLine {
 		
 		private var trafficContainer : Sprite ;
-		//private var traffic : DisplayObject = new Assets.game_carMedium_mc();
-		
 		private var trafficArr:Array=[];
+		private var nextUnitDistance:uint;
 		
-		public function TrafficLine(_speed:Number,_unitTypes:Array=null) {
+		private var _vo:TrafficLineVO;
+		
+		public function TrafficLine(trafficData:TrafficLineVO) {
 			
-			speed=_speed;
-			if (_unitTypes) unitTypes=_unitTypes;
 			trafficContainer = new Sprite();
 			addChild(trafficContainer);
 			
-			init();
-			
 			configListeners() ;
+			vo=trafficData;
 		}
+		
+		//
+		//SETTERS  AND GETTERS
+		//
+		
+		public function get vo() : TrafficLineVO {
+			return _vo;
+		}
+
+		public function set vo(value : TrafficLineVO) : void {
+			_vo = value;
+			setupTraffic();
+		}
+		
+		
 		//
 		//PUBLIC FUNCTIONS
 		//
-		public function hitTestTraffic(target : DisplayObject) : Boolean {
+		/**
+		 * Interface function -> returns hit test of line traffic units
+		 * 
+		 */
+		public function hitTestLine(target : DisplayObject) : Boolean {
 			var trafficUnit : DisplayObject;
 			
 			for (var i : int = 0;i < trafficArr.length;i++) {
@@ -52,30 +59,31 @@ package net.antonstepanov.frogger.view {
 			return false;
 		}
 		
+		
 		//
 		//PRIVATE FUNCTIONS
 		//
-		private function init():void {
+		private function setupTraffic():void {
+			while (trafficContainer.numChildren>0) {trafficContainer.removeChildAt(0);}
+			
 			var trafficUnit:DisplayObject;
 			var nextPos:int=0;
 			
-			for (var i:int=0;i<unitQty;i++) {
-				//trafficUnit= new Assets.game_carMedium_mc();
+			for (var i:int=0;i<vo.unitQty;i++) {
 				trafficUnit= getUnit();
 				trafficContainer.addChild(trafficUnit);
 				
-				
 				trafficUnit.x=nextPos;
-				nextPos=trafficUnit.x+trafficUnit.width+MathUtils.randomIntegerRange(minDistance, maxDistance);
+				nextPos=trafficUnit.x+trafficUnit.width+MathUtils.randomIntegerRange(vo.minDistance, vo.maxDistance);
 				trafficArr.push(trafficUnit);
 			}
-			nextUnitDistance=MathUtils.randomIntegerRange(minDistance, maxDistance)+trafficUnit.width;
+			nextUnitDistance=MathUtils.randomIntegerRange(vo.minDistance, vo.maxDistance)+trafficUnit.width;
 		}
 		
 		
 		private function checkTraffic(unit : DisplayObject, index : int) : void {
-			if (speed > 0) {
-				if (unit.x- unit.width > lineLength) {
+			if (vo.speed > 0) {
+				if (unit.x- unit.width > vo.lineLength) {
 					trafficContainer.removeChild(unit);
 					trafficArr.splice(index, 1);
 				}
@@ -91,22 +99,22 @@ package net.antonstepanov.frogger.view {
 			var trafficUnit:DisplayObject= getUnit();
 			trafficContainer.addChild(trafficUnit);
 			
-			if (speed>0){
+			if (vo.speed>0){
 				trafficUnit.x=-trafficUnit.width;
 			}else {
-				trafficUnit.x=lineLength;
+				trafficUnit.x=vo.lineLength;
 			}
 			
 			trafficArr.push(trafficUnit);
 			
-			nextUnitDistance=MathUtils.randomIntegerRange(minDistance, maxDistance)+trafficUnit.width;
+			nextUnitDistance=MathUtils.randomIntegerRange(vo.minDistance, vo.maxDistance)+trafficUnit.width;
 			//nextUnitDistance=trafficUnit.x;
 		}
-
 		
 		private function getUnit():DisplayObject {
-			var index:int=MathUtils.randomIntegerRange(0, unitTypes.length);
-			return new TrafficUnit(unitTypes[index],speed);;
+			
+			var index:int=MathUtils.randomIntegerRange(0, vo.trafficUnitArray.length);
+			return new TrafficUnit(vo.trafficUnitArray[index],vo.speed);;
 		}
 		
 		
@@ -115,20 +123,21 @@ package net.antonstepanov.frogger.view {
 		}
 
 		private function enterFrameHandler(event : Event) : void {
-			var trafficUnit:DisplayObject;
-			var noTraffic:int=lineLength;//no traffic distance
+			//trace('event: ' + (event));
+			var trafficUnit : DisplayObject;
+			var noTraffic:int=vo.lineLength;//no traffic distance
 			
 			for (var i:int=0;i<trafficArr.length;i++) {
 				trafficUnit=trafficArr[i]; 
-				trafficUnit.x+=speed;
+				trafficUnit.x+=vo.speed;
 				
-				if (speed>0){
+				if (vo.speed>0){
 					if (noTraffic > trafficUnit.x) {
 						noTraffic=trafficUnit.x;
 					}
 				} else {
-					if (noTraffic > lineLength-trafficUnit.x) {
-						noTraffic=lineLength-trafficUnit.x;
+					if (noTraffic > vo.lineLength-trafficUnit.x) {
+						noTraffic=vo.lineLength-trafficUnit.x;
 						
 					}
 				}
@@ -139,6 +148,10 @@ package net.antonstepanov.frogger.view {
 				addUnit();	
 			}
 		}
+
+		
+
+		
 
 		
 	}

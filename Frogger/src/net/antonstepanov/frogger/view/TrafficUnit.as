@@ -1,6 +1,4 @@
 package net.antonstepanov.frogger.view {
-	import com.greensock.TweenMax;
-	import flash.events.Event;
 	import assets.Assets;
 
 	import flash.display.DisplayObject;
@@ -28,37 +26,13 @@ package net.antonstepanov.frogger.view {
 		
 		private var direction:int=1;
 		
-		private var distance:int;
-		private var endX:int;
-		private var speed:int;
-		
 		public function TrafficUnit(_type:String,_direction:int) {
 			type=_type;
 			direction=_direction;
 			init();
-			drawBG();
+			//drawBG();
 		}
 
-		private function drawBG() : void {
-			this.graphics.beginFill(0xFF0000,.5);
-			this.graphics.drawRect(0, 0, this.width, this.height);
-			this.graphics.endFill();
-		}
-		
-		//
-		//PUBLIC FUNCTIONS
-		//
-		public function setPath(_start:int,_distance:int,_speed:Number):void {
-			this.x=_start;
-			distance=_distance;
-			endX=_start+_distance;
-			speed=_speed;//px/frame
-			this.addEventListener(Event.ENTER_FRAME, enterFrameHandler);
-		}
-		
-		public function dispose():void {
-			
-		}
 		
 		//
 		//PRIVATE FUNCTIONS
@@ -94,9 +68,11 @@ package net.antonstepanov.frogger.view {
 				case TREE_LONG:
 					unit = new Assets.game_treeLong_mc();
 					break;
+					
 				case TREE_MEDIUM:
 					unit = new Assets.game_treeMedium_mc();
 					break;
+					
 				case TREE_SMALL:
 					unit = new Assets.game_treeSmall_mc();
 					break;
@@ -120,15 +96,12 @@ package net.antonstepanov.frogger.view {
 			return unit;
 		}
 		
-		//
-		//EVENT HANDLERS
-		//
-		private function enterFrameHandler(event : Event) : void {
-			if (this.x != endX) {
-				this.x += speed;
-			} else {
-				dispose();
-			}
+		//temp
+		private function drawBG() : void {
+			this.graphics.beginFill(0xFF0000,.5);
+			this.graphics.drawRect(0, 0, this.width, this.height);
+			this.graphics.endFill();
 		}
+		
 	}
 }

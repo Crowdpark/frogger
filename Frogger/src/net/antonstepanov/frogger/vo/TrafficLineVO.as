@@ -1,4 +1,5 @@
 package net.antonstepanov.frogger.vo {
+	import net.antonstepanov.frogger.view.IFroggerLine;
 	import net.antonstepanov.frogger.view.TrafficLine;
 	/**
 	 * @author 'Anton Stepanov'
@@ -14,13 +15,14 @@ package net.antonstepanov.frogger.vo {
 		public var lineLength:int=768;
 		public var minDistance:uint=100;
 		public var maxDistance:uint=150;
-		public var unitQty:uint=4;
-		public var density:Number=.3;
+		public var unitQty:uint=3;
+		//public var density:Number=.3;
 		
 		
 		public var bgType:String;
 		public var trafficUnitArray:Array;
-		public var traficLineInstanse:TrafficLine;
+	//	public var traficLineInstanse:TrafficLine;
+		public var line:IFroggerLine;
 		
 		//for quick reference
 		public function get isTop() : Boolean {
